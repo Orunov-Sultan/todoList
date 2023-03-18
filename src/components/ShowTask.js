@@ -1,7 +1,12 @@
-export const ShowTask = ({taskList, setTaskList}) => {
+export const ShowTask = ({taskList, setTaskList, task, setTask}) => {
     const handleDelete = (id) => {
         const newTaskList = taskList.filter(taskItem => taskItem.id !== id)
         setTaskList(newTaskList)
+    }
+
+    const handleEdit = (id) => {
+        const editedTask = taskList.find(taskItem => taskItem.id === id)
+        setTask(editedTask)
     }
 
     return (
@@ -11,7 +16,7 @@ export const ShowTask = ({taskList, setTaskList}) => {
                     <span className="title">Todo</span>
                     <span className="count">{taskList.length}</span>
                 </div>
-                <button className="clearAll">Clear All</button>
+                <button onClick={() => setTaskList([])} className="clearAll">Clear All</button>
             </div>
             <ul>
                 {taskList.map((taskItem) => (
@@ -20,7 +25,7 @@ export const ShowTask = ({taskList, setTaskList}) => {
                             <span className="name">{taskItem.name}</span>
                             <span className="time">{taskItem.time}</span>
                         </p>
-                        <i className="bi bi-pencil-square"></i>
+                        <i onClick={() => handleEdit(taskItem.id)} className="bi bi-pencil-square"></i>
                         <i onClick={() => handleDelete(taskItem.id)} className="bi bi-trash"></i>
                     </li>
                 ))}
